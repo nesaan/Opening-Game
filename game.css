@@ -1,0 +1,31 @@
+body {
+  margin-top: 30px;
+}
+
+.msg {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.notmine {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.mymsg::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#msgspot {
+  width: 100%
+}
+
+#messages {
+  overflow-y: scroll;
+  height: 400px;
+}
