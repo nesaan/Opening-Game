@@ -9,9 +9,11 @@ var AudioHandler = function(){
     }
     vol = volume;
   }
-  function newAudio(url){
+  function newAudio(url, cb){
     audio = new Audio(url);
+    audio.load();
     audio.volume = vol || 0.5;
+    audio.oncanplaythrough = cb;
   }
 
   function play(){
@@ -19,7 +21,6 @@ var AudioHandler = function(){
       audio.play();
     }
   }
-
   function pause(){
     if(audio){
       audio.pause();
@@ -48,8 +49,9 @@ var AudioManager = function(){
 
   function newAudio(data){
     pause();
-    AudioHandler.newAudio(data.url);
-    play();
+    AudioHandler.newAudio(data.url, function(){
+      emit("songReady");
+    });
   }
 
 
@@ -76,6 +78,7 @@ var Chat = function(){
   var emit;
   var on;
   var messages;
+  var malspot;
 
   function addmessage(data){
     var x = $('<div class="msg">' + data.name +": " + data.content + '</div>').appendTo(messages);
@@ -88,7 +91,8 @@ var Chat = function(){
     var content = msgspot.val();
     if (content[0] == '/'){
       emit("command", {
-        content : content.substring(1)
+        content : content.substring(1),
+        mal : malspot.val()
       });
     }
     else{
@@ -101,6 +105,7 @@ var Chat = function(){
   function init(spec){
     msgspot = $("#msgspot");
     messages = $("#messages");
+    malspot = $("#malspot");
     emit = spec.emit;
     on  = spec.on;
 
@@ -166,6 +171,7 @@ var Game = function(){
       emit:emitMessage,
       on:onMessage
     });
+    onMessage("flush", function(){emitMessage("cutout");});
   }
 }
 

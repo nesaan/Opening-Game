@@ -13,26 +13,46 @@ var SongPicker = require('./songpicker.js').SongPicker;
 
 var socketHandler = function(){
   var sockets = [];
+  var count = 0;
   function add(socket){
     sockets.push(socket);
+    console.log(sockets.length);
     socket.on("disconnect", function(){
       sockets.splice(socket, 1);
+      console.log(sockets.length);
     });
     socket.on("msg", function(data){
       io.sockets.emit('new message', data);
     });
 
+    socket.on("songReady", function(){
+      count++;
+      if (count >= sockets.length){
+        io.sockets.emit("play");
+      }
+    });
+
+    socket.on("cutout", function(){
+      sockets.push(socket);
+      console.log("I am cut out");
+    });
+
     socket.on("command", function(data){
       if (data.content == "next"){
+        count = 0;
         SongPicker.getNextUrl(function(url){
           io.sockets.emit("newsong", {url:url});
-        });
+        }, data.mal);
       }
       else if (data.content == "pause"){
-        io.sockets.emit("pause", null);
+        io.sockets.emit("pause");
       }
       else if (data.content == "play"){
-        io.sockets.emit("play", null);
+        io.sockets.emit("play");
+      }
+      else if (data.content == "flush"){
+        sockets = [];
+        io.sockets.emit("flush");
       }
     });
 

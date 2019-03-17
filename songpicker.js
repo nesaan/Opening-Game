@@ -4,9 +4,9 @@ const got = require('got');
 
 var SongPicker = function(){
   var animes;
-
+  var mal;
   function getList(cb){
-    got('https://api.jikan.moe/v3/user/quickuranium/animelist/completed', { json: true }).then(response => {
+    got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
       animes = response.body.anime;
       cb();
     }).catch(error => {
@@ -36,10 +36,10 @@ var SongPicker = function(){
     });
   }
 
-  function getNextUrl(cb){
-    var anime;
-    if (!anime){
-      anime = getList(function(){
+  function getNextUrl(cb, malU){
+    if (!animes || (mal !== malU)){
+      mal = malU;
+      getList(function(){
         randomAnime(cb);
       });
     }
