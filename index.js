@@ -24,7 +24,9 @@ var socketHandler = function(){
 
     socket.on("command", function(data){
       if (data.content == "next"){
-        io.sockets.emit("newsong", {url:SongPicker.getNextUrl()});
+        SongPicker.getNextUrl(function(url){
+          io.sockets.emit("newsong", {url:url});
+        });
       }
       else if (data.content == "pause"){
         io.sockets.emit("pause", null);
