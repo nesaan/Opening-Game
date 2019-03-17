@@ -14,6 +14,7 @@ var SongPicker = require('./songpicker.js').SongPicker;
 var socketHandler = function(){
   var sockets = [];
   var count = 0;
+  var opInfo;
   function add(socket){
     sockets.push(socket);
     console.log(sockets.length);
@@ -39,9 +40,12 @@ var socketHandler = function(){
 
     socket.on("command", function(data){
       if (data.content == "next"){
+        opInfo = null;
         count = 0;
-        SongPicker.getNextUrl(function(url){
-          io.sockets.emit("newsong", {url:url});
+        io.sockets.emit("pause");
+        SongPicker.getNextUrl(function(data){
+          opInfo = data;
+          io.sockets.emit("newsong", {url:data.url});
         }, data.mal, function(errorMsg){
           io.sockets.emit("new message", {
             content: errorMsg || "This link was a baddy.",
@@ -59,6 +63,15 @@ var socketHandler = function(){
       else if (data.content == "flush"){
         sockets = [];
         io.sockets.emit("flush");
+      }
+      else if (data.content == "answer"){
+        if(opInfo){
+          io.sockets.emit("new message", {
+            content: "Anime: " + opInfo.anime + " / Title: " + opInfo.op,
+            name: "Miku",
+            isMiku: true
+          });
+        }
       }
     });
 

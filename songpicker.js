@@ -20,14 +20,18 @@ var SongPicker = function(){
     getLink(anime, cb,errcb);
   }
 
-  function randomOP(openings, cb, errcb){
+  function randomOP(openings, cb, errcb, title){
     var opening = openings[Math.floor(Math.random()*openings.length)];
     console.log(opening.links[0]);
     if (!opening || !opening.links || opening.links[0] == "https:\/\/youtube.com\/?op"){
       errcb();
     }
     else{
-      cb(opening.links[0]);
+      cb({
+        url:opening.links[0],
+        op: opening.title,
+        anime: title
+      });
     }
   }
 
@@ -35,7 +39,7 @@ var SongPicker = function(){
     console.log('https://openings.ninja/api/anime/' + anime.title);
     got('https://openings.ninja/api/anime/' + anime.title, { json: true }).then(response => {
       openings = response.body.openings;
-      randomOP(openings, cb, errcb);
+      randomOP(openings, cb, errcb, response.body.title);
     }).catch(error => {
       console.log(error.response);
       errcb();
