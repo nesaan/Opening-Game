@@ -1,8 +1,17 @@
 var AudioHandler = function(){
   var audio;
+  var vol;
 
+  function setVolume(volume){
+    volume = volume/100;
+    if(audio){
+      audio.volume = volume;
+    }
+    vol = volume;
+  }
   function newAudio(url){
     audio = new Audio(url);
+    audio.volume = vol || 0.5;
   }
 
   function play(){
@@ -19,7 +28,8 @@ var AudioHandler = function(){
   return {
     play:play,
     pause:pause,
-    newAudio:newAudio
+    newAudio:newAudio,
+    setVolume:setVolume
   }
 
 }();
@@ -42,12 +52,17 @@ var AudioManager = function(){
     play();
   }
 
+
+
   function init(spec){
     emit = spec.emit;
     on = spec.on;
     on("play", play);
     on("pause", pause);
     on("newsong", newAudio);
+    $("#volumeControl")[0].oninput = function(){
+      AudioHandler.setVolume(this.value);
+    };
   }
 
   return {

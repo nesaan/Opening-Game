@@ -16,6 +16,7 @@ var SongPicker = function(){
 
   function randomAnime(cb){
     var anime = animes[Math.floor(Math.random()*animes.length)];
+    console.log(anime.title);
     getLink(anime, cb);
   }
 
@@ -29,7 +30,6 @@ var SongPicker = function(){
     console.log('https://openings.ninja/api/anime/' + anime.title);
     got('https://openings.ninja/api/anime/' + anime.title, { json: true }).then(response => {
       openings = response.body.openings;
-      console.log(openings);
       randomOP(openings, cb);
     }).catch(error => {
       console.log(error.response);
