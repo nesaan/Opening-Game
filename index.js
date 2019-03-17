@@ -90,3 +90,4 @@ io.sockets.on('connection', function(socket){
 app.use('/game.js', express.static('game.js'));
 app.use('/game.css', express.static('game.css'));
 console.log("App Started:");
+console.log("Hosted on: localhost:3000");
