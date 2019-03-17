@@ -42,7 +42,13 @@ var socketHandler = function(){
         count = 0;
         SongPicker.getNextUrl(function(url){
           io.sockets.emit("newsong", {url:url});
-        }, data.mal);
+        }, data.mal, function(errorMsg){
+          io.sockets.emit("new message", {
+            content: errorMsg || "This link was a baddy.",
+            name: "Miku",
+            isMiku: true
+          })
+        });
       }
       else if (data.content == "pause"){
         io.sockets.emit("pause");
