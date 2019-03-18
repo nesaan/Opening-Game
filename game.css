@@ -1,16 +1,17 @@
 body {
   margin-top: 30px;
   background-color: #f4f8ff;
+  background-repeat: no-repeat;
 }
 
 .header {
-  padding-left: 190px;    
+  padding-left: 190px;
 }
 
 .container {
-  background-color: #c0cde2;    
+  background-color: #c0cde2;
   padding: 20px 15px 20px 15px;
-  border-radius: 25px;  
+  border-radius: 25px;
 }
 
 /* Chat Area */
@@ -23,7 +24,7 @@ body {
 
 /* Username/MAL Account Tags */
 .container .col-md-4:first-child{
-  font-size: 12pt;  
+  font-size: 12pt;
   margin-left: 5px;
   width: 11%;
 }
