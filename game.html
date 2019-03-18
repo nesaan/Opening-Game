@@ -19,7 +19,9 @@
    <div class="header">
      <h1>Miku's Opening Game</h1>
    </div>
-  <div class="container nescontainer">
+
+
+  <div class="container-fluid">
      <div class="row">
        <div class="col-md-5">
          <picture>
@@ -29,58 +31,58 @@
        </div>
 
        <div class="col-md-7">
-         <div class="container raycontainer">
-          <div class="row">
-            <div class="col-md-4">
-              <div>Username</div>
+         <div class="row raycontainer">
+           <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                <div>Username</div>
+              </div>
+              <div class="col-md-4">
+                <textarea id="usrspot" rows="1"></textarea>
+              </div>
+              <div class="col-md-4">
+                <div>Volume Control</div>
+              </div>
             </div>
-            <div class="col-md-4">
-              <textarea id="usrspot" rows="1"></textarea>
+            <div class="row">
+              <div class="col-md-4">
+                <div>MAL Account</div>
+              </div>
+              <div class="col-md-4">
+                <textarea id="malspot" rows="1"></textarea>
+              </div>
+
+              <div class="col-md-4">
+                <div class="slidecontainer">
+                  <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
+                </div>
+              </div>
+
             </div>
 
-            <div class="col-md-4">
-              <div>Volume Control</div>
-            </div>
-
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div>MAL Account</div>
-            </div>
-            <div class="col-md-4">
-              <textarea id="malspot" rows="1"></textarea>
-            </div>
-
-            <div class="col-md-4">
-              <div class="slidecontainer">
-                <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
+            <div class="row">
+              <div class="col-md-12">
+                <div id="messages">
+                </div>
+                <textarea id="msgspot" rows="1" placeholder="Enter Messages Here"></textarea>
               </div>
             </div>
 
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <div id="messages">
+            <div class="row btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+              <div class="col-md-5 btn-group mr-2" role="group" aria-label="First group">
+                <button type="button"  emitMsg="play" class="btn btn-primary kevBtn">Play</button>
+                <button type="button"  emitMsg="pause" class="btn btn-secondary kevBtn">Pause</button>
               </div>
-              <textarea id="msgspot" rows="1" placeholder="Enter Messages Here"></textarea>
+              <div class="col-md-5 btn-group mr-2" role="group" aria-label="Second group">
+                <button type="button" emitMsg="next" class="btn btn-primary kevBtn">Next</button>
+                <button type="button" emitMsg="answer" class="btn btn-secondary kevBtn">Answer</button>
+              </div>
             </div>
-          </div>
 
-          <div class="row btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="col-md-5 btn-group mr-2" role="group" aria-label="First group">
-              <button type="button" id ="play" class="btn btn-primary">Play</button>
-              <button type="button" id ="pause" class="btn btn-secondary">Pause</button>
-            </div>
-            <div class="col-md-5 btn-group mr-2" role="group" aria-label="Second group">
-              <button type="button" id ="next" class="btn btn-primary">Next</button>
-              <button type="button" id ="answer" class="btn btn-secondary">Answer</button>
-            </div>
-          </div>
-
-          <div class="row">
-            <div id="loading" style="display:none;" class="col-md-3 col-md-offset-9">
-              <div>Loading...</div>
+            <div class="row">
+              <div id="loading" style="display:none;" class="col-md-3 col-md-offset-9">
+                <div>Loading...</div>
+              </div>
             </div>
           </div>
          </div>

@@ -113,8 +113,6 @@ var Chat = function(){
     emit = spec.emit;
     on  = spec.on;
 
-
-
     on("new message", addmessage);
     msgspot.keypress(function(event){
       if (event.which == 13){
@@ -130,13 +128,13 @@ var Chat = function(){
 
 }();
 
-var Buttons = function(){
+var MusicControls = function(){
   var emit;
   var malspot;
-  var vetoed;
+  var validBtns;
 
   function handleMessage(content){
-    if (content && vetoed.includes(content)) {
+    if (content && validBtns.includes(content)) {
       emit("command", {
         content: content,
         mal: malspot.val()
@@ -146,10 +144,10 @@ var Buttons = function(){
   function init(spec){
     malspot = $("#malspot");
     emit = spec.emit;
-    vetoed = ["play", "pause", "next", "answer"];
+    validBtns = ["play", "pause", "next", "answer"];
 
-    $("button").click(function(e){
-      handleMessage(this.id);
+    $(".kevBtn").click(function(){
+      handleMessage(this.attributes["emitMsg"].value);
     });
   }
 
@@ -200,7 +198,7 @@ var Game = function(){
       emit:emitMessage,
       on:onMessage
     });
-    Buttons.init({
+    MusicControls.init({
       emit:emitMessage
     });
     AudioManager.init({
