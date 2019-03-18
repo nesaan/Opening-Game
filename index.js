@@ -79,6 +79,7 @@ io.sockets.on('connection', function(socket){
 app.use('/game.js', express.static('game.js'));
 app.use('/game.css', express.static('game.css'));
 app.use('/miku.png', express.static('miku.png'));
+app.use('/mikuchibi.png', express.static('mikuchibi.png'));
 console.log("App Started:");
 if (!process.env.PORT) {
   console.log("Hosted on: localhost:3000");

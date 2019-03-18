@@ -88,13 +88,16 @@ var Chat = function(){
   var on;
   var messages;
   var malspot;
+  var msgBoxT;
 
   function addmessage(data){
-    var msgbox = $('<div class="msgbox"></div>').appendTo(messages);
-    var msg = $('<div class="msg">' + data.name +": " + data.content + '</div>').appendTo(msgbox);
+    var msgbox = msgBoxT.clone().appendTo(messages);
+    var msg = msgbox.find(".msg");
+    msg.find('.msgtxt').text((!data.isMiku ? data.name : "") +": " + data.content);
     msg.addClass(data.name == User.name() ? "mine" : "notmine");
     if (data.isMiku){
       msg.addClass("mikumsg");
+      msg.find(".mikuChib").show();
     }
     messages.scrollTop(messages[0].scrollHeight);
   }
@@ -117,6 +120,7 @@ var Chat = function(){
     msgspot = $("#msgspot");
     messages = $("#messages");
     malspot = $("#malspot");
+    msgBoxT = $(".template").find(".msgbox");
     emit = spec.emit;
     on  = spec.on;
 

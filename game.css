@@ -54,6 +54,10 @@ body {
     opacity: 1 !important;
 }
 
+.template {
+  display: none;
+}
+
 .msgbox {
   overflow: auto;
 }
@@ -72,6 +76,10 @@ body {
 
 .mikumsg {
   color: #cd94b9;
+}
+.mikuChib {
+  display:none;
+  height:70px;
 }
 
 .mine {
