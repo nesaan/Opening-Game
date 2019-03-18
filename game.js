@@ -85,9 +85,13 @@ var Chat = function(){
   var malspot;
 
   function addmessage(data){
-    var x = $('<div class="msg">' + data.name +": " + data.content + '</div>').appendTo(messages);
+    var msgbox = $('<div class="msgbox"></div>').appendTo(messages);
+    var msg = $('<div class="msg">' + data.name +": " + data.content + '</div>').appendTo(msgbox);
     if (data.name == User.name()){
-      x.addClass("notmine");
+      msg.addClass("notmine");
+    }
+    if (data.isMiku){
+      msg.addClass("mikumsg");
     }
     messages.scrollTop(messages[0].scrollHeight);
   }

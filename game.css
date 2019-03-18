@@ -54,19 +54,27 @@ body {
     opacity: 1 !important;
 }
 
-
+.msgbox {
+  overflow: auto;
+}
 .msg {
   border: 2px solid #dedede;
   background-color: #f1f1f1;
   border-radius: 5px;
   padding: 10px;
-  /* margin: 10px 0; */
+  text-align: right;
   margin: 10px 15px 0px 5px;
+  display:inline-block;
+}
+
+.mikumsg {
+  color: #cd94b9;
 }
 
 .notmine {
   border-color: #ccc;
   background-color: #ddd;
+  float: right;
 }
 
 .mymsg::after {
