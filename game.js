@@ -87,9 +87,7 @@ var Chat = function(){
   function addmessage(data){
     var msgbox = $('<div class="msgbox"></div>').appendTo(messages);
     var msg = $('<div class="msg">' + data.name +": " + data.content + '</div>').appendTo(msgbox);
-    if (data.name == User.name()){
-      msg.addClass("notmine");
-    }
+    msg.addClass(data.name == User.name() ? "mine" : "notmine");
     if (data.isMiku){
       msg.addClass("mikumsg");
     }

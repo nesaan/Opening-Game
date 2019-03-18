@@ -62,19 +62,23 @@ body {
   background-color: #f1f1f1;
   border-radius: 5px;
   padding: 10px;
-  text-align: right;
   margin: 10px 15px 0px 5px;
   display:inline-block;
+}
+
+.notmine {
+  text-align: left;
 }
 
 .mikumsg {
   color: #cd94b9;
 }
 
-.notmine {
+.mine {
   border-color: #ccc;
   background-color: #ddd;
   float: right;
+  text-align: right;
 }
 
 .mymsg::after {
@@ -84,7 +88,8 @@ body {
 }
 
 #msgspot {
-  width: 100%
+  width: 100%;
+  margin-top: 10px;
 }
 
 #messages {
