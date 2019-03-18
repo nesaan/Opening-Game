@@ -11,6 +11,7 @@
   "dependencies": {
     "socket.io": "*",
     "express": "*",
-    "got": "*"
+    "got": "*",
+    "uuid": "*"
   }
 }

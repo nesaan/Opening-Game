@@ -89,12 +89,13 @@ var Chat = function(){
   var messages;
   var malspot;
   var msgBoxT;
+  var uuid;
 
   function addmessage(data){
     var msgbox = msgBoxT.clone().appendTo(messages);
     var msg = msgbox.find(".msg");
     msg.find('.msgtxt').text((!data.isMiku ? data.name : "") +": " + data.content);
-    msg.addClass(data.name == User.name() ? "mine" : "notmine");
+    msg.addClass(data.uuid === uuid ? "mine" : "notmine");
     if (data.isMiku){
       msg.addClass("mikumsg");
       msg.find(".mikuChib").show();
@@ -103,7 +104,7 @@ var Chat = function(){
   }
   function handleMessage(){
     var content = msgspot.val();
-    if (content[0] == '/'){
+    if (content[0] === '/'){
       emit("command", {
         content : content.substring(1),
         mal : malspot.val()
@@ -123,7 +124,7 @@ var Chat = function(){
     msgBoxT = $(".template").find(".msgbox");
     emit = spec.emit;
     on  = spec.on;
-
+    on("uuid", function(data){uuid = data });
     on("new message", addmessage);
     msgspot.keypress(function(event){
       if (event.which == 13){

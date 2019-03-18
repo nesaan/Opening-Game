@@ -10,11 +10,14 @@ app.get('/', function(req, res){
 var io = require('socket.io').listen(server);
 
 var OPManager = require('./opmanager.js');
-
+var uuid1 = require('uuid/v1');
 
 var socketHandler = function(){
   var sockets = [];
   function add(socket){
+    var uuid = uuid1();
+    socket.emit("uuid", uuid);
+    console.log("New User: " + uuid);
     sockets.push(socket);
     console.log(sockets.length);
     socket.on("disconnect", function(){
@@ -22,6 +25,7 @@ var socketHandler = function(){
       console.log(sockets.length);
     });
     socket.on("msg", function(data){
+      data.uuid = uuid;
       io.sockets.emit('new message', data);
     });
 
