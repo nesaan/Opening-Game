@@ -15,6 +15,11 @@
  </head>
 
  <body>
+   <!--Rayman Code-->
+   <div class="header">
+     <h1>Opening Game</h1>
+   </div>
+ 
    <div class="container">
      <div class="row">
        <div class="col-md-4">
@@ -24,19 +29,32 @@
          <textarea id="usrspot" rows="1"></textarea>
        </div>
 
+       <!-- Moved To Row Below
+       <div class="col-md-4">
+         <div class="slidecontainer">
+           <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
+         </div>
+       </div> -->
+       <div class="col-md-4">
+         <div>Volume Control</div>
+       </div>
+       
+       
+     </div>
+     <div class="row">
+       <div class="col-md-4">
+         <div>MAL Account</div>
+       </div>
+       <div class="col-md-4">
+         <textarea id="malspot" rows="1"></textarea>
+       </div>
+       
        <div class="col-md-4">
          <div class="slidecontainer">
            <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
          </div>
        </div>
-     </div>
-     <div class="row">
-       <div class="col-md-4">
-         <div>Mal: </div>
-       </div>
-       <div class="col-md-4">
-         <textarea id="malspot" rows="1"></textarea>
-       </div>
+       
      </div>
 
      <div class="row">
@@ -44,7 +62,7 @@
          <div id="messages">
            <div class="msg">mymsg</div>
          </div>
-         <textarea id="msgspot" rows="1"></textarea>
+         <textarea id="msgspot" rows="1" placeholder="Enter Messages Here"></textarea>
        </div>
      </div>
    </div>
