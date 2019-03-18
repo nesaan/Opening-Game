@@ -14,69 +14,72 @@
      <![endif]-->
  </head>
 
- <body background="./miku.png">
+ <body
    <!--Rayman Code-->
    <div class="header">
      <h1>Miku's Opening Game</h1>
    </div>
 
-   <div class="container">
-     <div class="row">
-       <div class="col-md-4">
-         <div>Username</div>
-       </div>
-       <div class="col-md-4">
-         <textarea id="usrspot" rows="1"></textarea>
-       </div>
-
-       <!-- Moved To Row Below
-       <div class="col-md-4">
-         <div class="slidecontainer">
-           <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
-         </div>
-       </div> -->
-       <div class="col-md-4">
-         <div>Volume Control</div>
-       </div>
-
-
-     </div>
-     <div class="row">
-       <div class="col-md-4">
-         <div>MAL Account</div>
-       </div>
-       <div class="col-md-4">
-         <textarea id="malspot" rows="1"></textarea>
-       </div>
-
-       <div class="col-md-4">
-         <div class="slidecontainer">
-           <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
-         </div>
-       </div>
-
+   <div class="row">
+     <div class="col-md-5">
+       <picture>
+         <source media="(min-width: 650px)" srcset="miku.png">
+         <img src="miku.png" alt="Flowers" style="width:auto;">
+       </picture>
      </div>
 
-     <div class="row">
-       <div class="col-md-12">
-         <div id="messages">
-         </div>
-         <textarea id="msgspot" rows="1" placeholder="Enter Messages Here"></textarea>
-       </div>
-     </div>
+     <div class="col-md-7">
+       <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div>Username</div>
+          </div>
+          <div class="col-md-4">
+            <textarea id="usrspot" rows="1"></textarea>
+          </div>
 
-     <div class="row btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-       <div class="col-md-5 btn-group mr-2" role="group" aria-label="First group">
-         <button type="button" id ="play" class="btn btn-primary">Play</button>
-         <button type="button" id ="pause" class="btn btn-secondary">Pause</button>
-       </div>
-       <div class="col-md-5 btn-group mr-2" role="group" aria-label="Second group">
-         <button type="button" id ="next" class="btn btn-primary">Next</button>
-         <button type="button" id ="answer" class="btn btn-secondary">Answer</button>
+          <div class="col-md-4">
+            <div>Volume Control</div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div>MAL Account</div>
+          </div>
+          <div class="col-md-4">
+            <textarea id="malspot" rows="1"></textarea>
+          </div>
+
+          <div class="col-md-4">
+            <div class="slidecontainer">
+              <input type="range" min="1" max="100" value="50" class="slider" id="volumeControl">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div id="messages">
+            </div>
+            <textarea id="msgspot" rows="1" placeholder="Enter Messages Here"></textarea>
+          </div>
+        </div>
+
+        <div class="row btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="col-md-5 btn-group mr-2" role="group" aria-label="First group">
+            <button type="button" id ="play" class="btn btn-primary">Play</button>
+            <button type="button" id ="pause" class="btn btn-secondary">Pause</button>
+          </div>
+          <div class="col-md-5 btn-group mr-2" role="group" aria-label="Second group">
+            <button type="button" id ="next" class="btn btn-primary">Next</button>
+            <button type="button" id ="answer" class="btn btn-secondary">Answer</button>
+          </div>
+        </div>
        </div>
      </div>
    </div>
-
 
 	<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
