@@ -8,7 +8,13 @@ body {
   padding-left: 190px;
 }
 
-.container {
+.nescontainer {
+  width:100%;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.raycontainer {
   background-color: #c0cde2;
   padding: 20px 15px 20px 15px;
   border-radius: 25px;
@@ -16,7 +22,7 @@ body {
 }
 
 /* Chat Area */
-.container .row:nth-child(3) {
+.raycontainer .row:nth-child(3) {
   background-color: #ddeaff;
   margin: 10px 2px 5px 2px;
   padding-bottom: 5px;
@@ -24,28 +30,28 @@ body {
 }
 
 /* Username/MAL Account Tags */
-.container .col-md-4:first-child{
+.raycontainer .col-md-4:first-child{
   font-size: 12pt;
   margin-left: 5px;
   width: 11%;
 }
 
-.container .col-md-4:nth-child(2) {
+.raycontainer .col-md-4:nth-child(2) {
   width: 50%
 }
 
 /* Username/MAL Account Textboxes */
-.container .col-md-4:nth-child(2) > textarea{
+.raycontainer .col-md-4:nth-child(2) > textarea{
   width: 250px;
 }
 
 /* Volume Control Tag */
-.container .row:nth-child(1) .col-md-4:nth-child(3) {
+.raycontainer .row:nth-child(1) .col-md-4:nth-child(3) {
   font-size: 12pt;
 }
 
 /* Chat Area Textbox (Bottom) */
-.container .row:nth-child(3) > textarea {
+.raycontainer .row:nth-child(3) > textarea {
   font-size: 12pt;
 }
 
