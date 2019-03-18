@@ -126,6 +126,35 @@ var Chat = function(){
 
 }();
 
+var Buttons = function(){
+  var emit;
+  var malspot;
+  var vetoed;
+
+  function handleMessage(content){
+    if (vetoed.includes(content)) {
+      emit("command", {
+        content: content,
+        mal: malspot.val()
+      });
+    }
+  }
+  function init(spec){
+    malspot = $("#malspot");
+    emit = spec.emit;
+    vetoed = ["play", "pause", "next", "answer"];
+
+    $("button").click(function(e){
+      handleMessage(this.id);
+    });
+  }
+
+  return {
+    init:init
+  }
+
+}();
+
 var User = function(){
   var usrspot;
   function init(){
@@ -166,6 +195,9 @@ var Game = function(){
     Chat.init({
       emit:emitMessage,
       on:onMessage
+    });
+    Buttons.init({
+      emit:emitMessage
     });
     AudioManager.init({
       emit:emitMessage,
