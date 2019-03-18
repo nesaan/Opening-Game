@@ -51,10 +51,14 @@ var AudioManager = function(){
 
   function newAudio(data){
     pause();
-    loading.show();
+    loading.text("loading").show();
     AudioHandler.newAudio(data.url, function(){
       emit("songReady");
     });
+  }
+
+  function countdown(count){
+    loading.text(count);
   }
 
 
@@ -66,6 +70,7 @@ var AudioManager = function(){
     on("play", play);
     on("pause", pause);
     on("newsong", newAudio);
+    on("countdown", countdown);
     $("#volumeControl")[0].oninput = function(){
       AudioHandler.setVolume(this.value);
     };

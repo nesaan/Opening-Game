@@ -15,7 +15,16 @@ var OPManager = function(){
     socket.on("songReady", function(){
       count++;
       if (count >= sockets().length){
-        io.sockets.emit("play");
+        var countdown = 3;
+        var timer = setInterval(function(){
+          if (countdown == 0){
+            clearInterval(timer);
+            io.sockets.emit("play");
+          }
+          else{
+            io.sockets.emit("countdown", countdown--);
+          }
+        }, 1000);
       }
     });
   }
