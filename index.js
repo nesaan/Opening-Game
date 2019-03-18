@@ -20,9 +20,11 @@ var socketHandler = function(){
     console.log("New User: " + uuid);
     sockets.push(socket);
     console.log(sockets.length);
+    io.sockets.emit("usrcount", sockets.length);
     socket.on("disconnect", function(){
       sockets.splice(socket, 1);
       console.log(sockets.length);
+      io.sockets.emit("usrcount", sockets.length);
     });
     socket.on("msg", function(data){
       data.uuid = uuid;

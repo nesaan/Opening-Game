@@ -95,6 +95,10 @@ body {
   display: table;
 }
 
+#usrcount {
+  color: #cd94b9;
+}
+
 #msgspot {
   width: 100%;
   margin-top: 10px;

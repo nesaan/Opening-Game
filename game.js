@@ -127,7 +127,7 @@ var Chat = function(){
     on("uuid", function(data){uuid = data });
     on("new message", addmessage);
     msgspot.keypress(function(event){
-      if (event.which == 13){
+      if (event.which === 13){
         event.preventDefault();
         handleMessage();
       }
@@ -173,7 +173,7 @@ var User = function(){
   function init(){
     usrspot = $("#usrspot");
     usrspot.keypress(function(event){
-      if (event.which == 13){
+      if (event.which === 13){
         event.preventDefault();
         return false;
       }
@@ -187,6 +187,19 @@ var User = function(){
   return {
     name : name,
     init: init
+  }
+}();
+
+var Counter = function(){
+  var usrcount;
+  var on;
+  function init(spec){
+    usrcount = $("#usrcount");
+    on = spec.on;
+    on("usrcount", function(data){usrcount.text("Users online: " + data);});
+  }
+  return {
+    init : init
   }
 }();
 
@@ -216,6 +229,9 @@ var Game = function(){
       emit:emitMessage,
       on:onMessage
     });
+    Counter.init({
+      on:onMessage
+    })
     onMessage("flush", function(){emitMessage("cutout");});
   }
 }
