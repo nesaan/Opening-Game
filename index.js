@@ -9,7 +9,7 @@ app.get('/', function(req, res){
 
 var io = require('socket.io').listen(server);
 
-var OPManager = require('./opmanager.js').OPManager;
+var OPManager = require('./opmanager.js');
 
 
 var socketHandler = function(){

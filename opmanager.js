@@ -8,7 +8,7 @@ var OPManager = function(){
   function init(spec){
     sockets = spec.sockets;
     io = spec.io;
-    SongPicker = require('./songpicker.js').SongPicker;
+    SongPicker = require('./songpicker.js');
   }
 
   function add(socket){
@@ -64,4 +64,4 @@ var OPManager = function(){
 
 }();
 
-exports.OPManager = OPManager;
+module.exports = OPManager;

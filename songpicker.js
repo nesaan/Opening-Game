@@ -69,4 +69,4 @@ var SongPicker = function(){
   return {getNextUrl : getNextUrl};
 }();
 
-exports.SongPicker = SongPicker;
+module.exports = SongPicker;
