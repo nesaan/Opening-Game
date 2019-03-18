@@ -154,7 +154,6 @@ var MusicControls = function(){
   return {
     init:init
   }
-
 }();
 
 var User = function(){
