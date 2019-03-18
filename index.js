@@ -9,12 +9,11 @@ app.get('/', function(req, res){
 
 var io = require('socket.io').listen(server);
 
-var SongPicker = require('./songpicker.js').SongPicker;
+var OPManager = require('./opmanager.js').OPManager;
+
 
 var socketHandler = function(){
   var sockets = [];
-  var count = 0;
-  var opInfo;
   function add(socket){
     sockets.push(socket);
     console.log(sockets.length);
@@ -26,12 +25,7 @@ var socketHandler = function(){
       io.sockets.emit('new message', data);
     });
 
-    socket.on("songReady", function(){
-      count++;
-      if (count >= sockets.length){
-        io.sockets.emit("play");
-      }
-    });
+    OPManager.add(socket);
 
     socket.on("cutout", function(){
       sockets.push(socket);
@@ -40,19 +34,7 @@ var socketHandler = function(){
 
     socket.on("command", function(data){
       if (data.content == "next"){
-        opInfo = null;
-        count = 0;
-        io.sockets.emit("pause");
-        SongPicker.getNextUrl(function(data){
-          opInfo = data;
-          io.sockets.emit("newsong", {url:data.url});
-        }, data.mal, function(errorMsg){
-          io.sockets.emit("new message", {
-            content: errorMsg || "This link was a baddy.",
-            name: "Miku",
-            isMiku: true
-          })
-        });
+        OPManager.nextSong(data.mal);
       }
       else if (data.content == "pause"){
         io.sockets.emit("pause");
@@ -65,22 +47,29 @@ var socketHandler = function(){
         io.sockets.emit("flush");
       }
       else if (data.content == "answer"){
-        if(opInfo){
-          io.sockets.emit("new message", {
-            content: "Anime: " + opInfo.anime + " / Title: " + opInfo.op,
-            name: "Miku",
-            isMiku: true
-          });
-        }
+        OPManager.answer();
       }
     });
+  }
 
+  function getSockets(){
+    return sockets;
+  }
+
+  function init(){
+    OPManager.init({
+      sockets:getSockets,
+      io:io
+    });
   }
   return {
+    init:init,
     add : add
   }
 
 }();
+
+socketHandler.init();
 
 io.sockets.on('connection', function(socket){
     socketHandler.add(socket);
@@ -90,3 +79,6 @@ io.sockets.on('connection', function(socket){
 app.use('/game.js', express.static('game.js'));
 app.use('/game.css', express.static('game.css'));
 console.log("App Started:");
+if (!process.env.PORT) {
+  console.log("Hosted on: localhost:3000");
+}

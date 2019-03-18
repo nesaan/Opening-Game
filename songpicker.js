@@ -4,10 +4,12 @@ const got = require('got');
 
 var SongPicker = function(){
   var animes;
+  var animesFull;
   var mal;
   function getList(cb, errcb){
     got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
       animes = response.body.anime;
+      animesFull = animes.slice();
       cb();
     }).catch(error => {
       errcb();
@@ -15,8 +17,14 @@ var SongPicker = function(){
   }
 
   function randomAnime(cb, errcb){
-    var anime = animes[Math.floor(Math.random()*animes.length)];
+    var index = Math.floor(Math.random()*animes.length);
+    var anime = animes[index];
     console.log(anime.title);
+    animes.splice(index, 1);
+    if (animes.length == 0){
+      animes = animesFull ? animesFull.slice() : null;
+      console.log("finished all the anime");
+    }
     getLink(anime, cb,errcb);
   }
 
