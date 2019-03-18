@@ -38,8 +38,10 @@ var AudioHandler = function(){
 var AudioManager = function(){
   var emit;
   var on;
+  var loading;
 
   function play(){
+    loading.hide();
     AudioHandler.play();
   }
 
@@ -49,6 +51,7 @@ var AudioManager = function(){
 
   function newAudio(data){
     pause();
+    loading.show();
     AudioHandler.newAudio(data.url, function(){
       emit("songReady");
     });
@@ -57,6 +60,7 @@ var AudioManager = function(){
 
 
   function init(spec){
+    loading = $('#loading');
     emit = spec.emit;
     on = spec.on;
     on("play", play);
