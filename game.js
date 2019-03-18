@@ -132,7 +132,7 @@ var Buttons = function(){
   var vetoed;
 
   function handleMessage(content){
-    if (vetoed.includes(content)) {
+    if (content && vetoed.includes(content)) {
       emit("command", {
         content: content,
         mal: malspot.val()
