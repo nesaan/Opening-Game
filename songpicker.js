@@ -12,7 +12,7 @@ var SongPicker = function(){
       return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/watching', { json: true });
     }).then(response => {
       animes = animes.concat(response.body.anime);
-    }).then(response => {
+    }).then(() => {
       animesFull = animes.slice();
       cb();
     }).catch(error => {
