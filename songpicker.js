@@ -48,7 +48,7 @@ var SongPicker = function(){
   }
 
   function getLink(anime, cb, errcb){
-    var link = anime.title.replace("/", "");
+    var link = "https://openings.ninja/api/anime/" + anime.title.replace("/", "");
     console.log(link);
     got(link, { json: true }).then(response => {
       openings = response.body.openings;
