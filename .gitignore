@@ -1,2 +1,6 @@
 node_modules/
 miku.psd
+.idea/
+.vscode/
+test.png
+test2.png
