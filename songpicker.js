@@ -54,7 +54,6 @@ var SongPicker = function(){
       openings = response.body.openings;
       randomOP(openings, cb, errcb, response.body.title);
     }).catch(error => {
-      console.log(error.response);
       errcb();
     });
   }
