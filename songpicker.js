@@ -9,13 +9,12 @@ var SongPicker = function(){
   function getList(cb, errcb){
     got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
       animes = response.body.anime;
-      animesFull = animes.slice();
       return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/watching', { json: true });
     }).then(response => {
-      animes = response.body.anime;
-      tempanimes = animes.slice();
-	  animesFull = animesFull.concat(tempanimes);
-	  cb();
+      animes = animes.concat(response.body.anime);
+    }).then(response => {
+      animesFull = animes.slice();
+      cb();
     }).catch(error => {
       errcb();
     });
