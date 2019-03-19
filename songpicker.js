@@ -9,6 +9,10 @@ var SongPicker = function(){
   function getList(cb, errcb){
     got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
       animes = response.body.anime;
+      return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/watching', { json: true });
+    }).then(response => {
+      animes = animes.concat(response.body.anime);
+    }).then(() => {
       animesFull = animes.slice();
       cb();
     }).catch(error => {
