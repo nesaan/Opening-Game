@@ -10,10 +10,10 @@ var PlayerManager = function (){
       return;
     }
 
-    for (var playKey in players){
+    for (var playKey in player.keys()){
       var player = players[playKey];
       socket.emit('addscore', {
-        uuid:player.uuid,
+        uuid:playKey,
         score:player.score,
         username:player.username
       });
@@ -32,7 +32,6 @@ var PlayerManager = function (){
     });
 
     players[uuid] = {
-      uuid:uuid,
       username:name,
       score:0,
       socket:socket
@@ -41,7 +40,7 @@ var PlayerManager = function (){
 
   function remove(uuid){
     if (players[uuid]){
-      for (var playKey in players){
+      for (var playKey in players.keys()){
           players[playKey].socket.emit('removescore', {
             uuid:uuid
           });
@@ -53,7 +52,7 @@ var PlayerManager = function (){
 
   function update(uuid, score){
     if (players[uuid]){
-      for (var playKey in players){
+      for (var playKey in players.keys()){
         players[playKey].socket.emit('updatescore', {
           uuid:uuid,
           score:score
