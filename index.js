@@ -11,6 +11,7 @@ var io = require('socket.io').listen(server);
 
 var OPManager = require('./opmanager.js');
 var uuid1 = require('uuid/v1');
+var PlayerManager = require('./playermanager.js');
 
 var socketHandler = function(){
   var sockets = [];
@@ -25,9 +26,7 @@ var socketHandler = function(){
       sockets.splice(socket, 1);
       console.log(sockets.length);
       io.sockets.emit("usrcount", sockets.length);
-      io.emit('removescore', {
-        uuid:uuid
-      });
+      PlayerManager.remove(uuid);
     });
     socket.on("msg", function(data){
       data.uuid = uuid;
@@ -59,22 +58,14 @@ var socketHandler = function(){
       else if (args[0] == "answer"){
         OPManager.answer();
       }
-      else if (args[0] == "join") {
-        io.emit("addscore", {
-          uuid:uuid,
-          username:args[1] ? args[1] : "Unknown"
-        });
+      else if (args[0] == "join"){
+        PlayerManager.join(socket, uuid, args[1] ? args[1] : "Unknown");
       }
-      else if (args[0] == "update") {
-        io.emit('updatescore', {
-          uuid:uuid,
-          score:args[1] ? args[1] : "Rip, '/update X' man"
-        });
+      else if (args[0] == "update"){
+        PlayerManager.update(uuid, parseInt(args[1]) ? parseInt(args[1]) : 0);
       }
       else if (args[0] == "leave"){
-        io.emit('removescore', {
-            uuid:uuid
-        });
+        PlayerManager.remove(uuid);
       }
     });
   }
@@ -88,6 +79,7 @@ var socketHandler = function(){
       sockets:getSockets,
       io:io
     });
+    PlayerManager.init();
   }
   return {
     init:init,

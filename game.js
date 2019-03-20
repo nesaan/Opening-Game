@@ -237,8 +237,12 @@ var ScoreManager = function (){
     on('addscore', addscore);
     on('updatescore', updatescore);
     on('removescore', removescore);
+    on('removeallscores', removeallscores);
   }
 
+  function removeallscores() {
+    scorecontainer.empty();
+  }
   function removescore(data){
     scorecontainer.find("div[uuid='"+ data.uuid +"']").remove();
   }
@@ -251,6 +255,7 @@ var ScoreManager = function (){
     var scoreBox = scoreT.clone();
     scorecontainer.append(scoreBox);
     scoreBox.find('.playerName').text(data.username);
+    scoreBox.find('.playerScore').text(data.score ? data.score : 0);
     scoreBox.attr('uuid', data.uuid);
   }
 
