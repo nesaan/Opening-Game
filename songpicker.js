@@ -6,14 +6,25 @@ var SongPicker = function(){
   var animes;
   var animesFull;
   var mal;
+  var listCatagories = ["watching", "completed"];
+
+  function getListRec(catagories){
+    if (!catagories || !catagories.length){
+      return Promise.resolve([]);
+    }
+    else {
+      return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/' + catagories.pop(), { json: true }).then(response => {
+        return getListRec(catagories).then(animeslist => {
+          return animeslist.concat(response.body.anime);
+        });
+      });
+    }
+  }
+
   function getList(){
-    return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
-      animes = response.body.anime;
-      return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/watching', { json: true });
-    }).then(response => {
-      animes = animes.concat(response.body.anime);
-    }).then(() => {
-      animesFull = animes.slice();
+    return getListRec(listCatagories.slice()).then(animeslist => {
+        animes = animeslist;
+        animesFull = animes.slice();
     });
   }
 
