@@ -25,6 +25,9 @@ var socketHandler = function(){
       sockets.splice(socket, 1);
       console.log(sockets.length);
       io.sockets.emit("usrcount", sockets.length);
+      io.emit('removescore', {
+        uuid:uuid
+      });
     });
     socket.on("msg", function(data){
       data.uuid = uuid;
@@ -39,21 +42,39 @@ var socketHandler = function(){
     });
 
     socket.on("command", function(data){
-      if (data.content == "next"){
+      var args = data.content.split(' ');
+      if (args[0] == "next"){
         OPManager.nextSong(data.mal);
       }
-      else if (data.content == "pause"){
+      else if (args[0] == "pause"){
         io.sockets.emit("pause");
       }
-      else if (data.content == "play"){
+      else if (args[0] == "play"){
         io.sockets.emit("play");
       }
-      else if (data.content == "flush"){
+      else if (args[0] == "flush"){
         sockets = [];
         io.sockets.emit("flush");
       }
-      else if (data.content == "answer"){
+      else if (args[0] == "answer"){
         OPManager.answer();
+      }
+      else if (args[0] == "join") {
+        io.emit("addscore", {
+          uuid:uuid,
+          username:args[1] ? args[1] : "Unknown"
+        });
+      }
+      else if (args[0] == "update") {
+        io.emit('updatescore', {
+          uuid:uuid,
+          score:args[1] ? args[1] : "Rip, '/update X' man"
+        });
+      }
+      else if (args[0] == "leave"){
+        io.emit('removescore', {
+            uuid:uuid
+        });
       }
     });
   }

@@ -203,7 +203,44 @@ var Counter = function(){
   }
 }();
 
+var ScoreManager = function (){
 
+  var scoreT;
+  var scorecontainer;
+  var on;
+  var emit;
+
+  var scoreBoxes = [];
+  function init(spec){
+    scoreT = $(".template").find(".scorebox");
+    scorecontainer = $('#scorecontainer');
+    on = spec.on;
+    emit = spec.emit;
+
+    on('addscore', addscore);
+    on('updatescore', updatescore);
+    on('removescore', removescore);
+  }
+
+  function removescore(data){
+    scorecontainer.find("div[uuid='"+ data.uuid +"']").remove();
+  }
+
+  function updatescore(data){
+    scorecontainer.find("div[uuid='"+ data.uuid +"']").find('.playerScore').text(data.score);
+  }
+
+  function addscore(data) {
+    var scoreBox = scoreT.clone();
+    scorecontainer.append(scoreBox);
+    scoreBox.find('.playerName').text(data.username);
+    scoreBox.attr('uuid', data.uuid);
+  }
+
+  return {
+    init:init,
+  };
+}();
 
 var Game = function(){
   var msgspot;
@@ -231,7 +268,11 @@ var Game = function(){
     });
     Counter.init({
       on:onMessage
-    })
+    });
+    ScoreManager.init({
+      on:onMessage,
+      emit:emitMessage
+    });
     onMessage("flush", function(){emitMessage("cutout");});
   }
 }
