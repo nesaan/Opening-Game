@@ -10,7 +10,7 @@ var PlayerManager = function (){
       return;
     }
 
-    for (var playKey in player.keys()){
+    for (var playKey in players.keys()){
       var player = players[playKey];
       socket.emit('addscore', {
         uuid:playKey,
