@@ -171,6 +171,13 @@ var Buttons = function(){
     $(".kevBtn").click(function(){
       handleMessage(this.attributes["emitMsg"].value);
     });
+
+    updatespot.keypress(function(event){
+      if (event.which === 13){
+        event.preventDefault();
+        handleMessage("update");
+      }
+    });
   }
 
   return {
