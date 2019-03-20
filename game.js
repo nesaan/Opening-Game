@@ -140,26 +140,43 @@ var Chat = function(){
 
 }();
 
-var MusicControls = function(){
+var Buttons = function(){
   var emit;
   var malspot;
+  var updatespot;
   var validBtns;
 
   function handleMessage(content){
     if (content && validBtns.includes(content)) {
+      if (content === "join"){
+        content = content + " " + (User.name() || "no_name®");
+      }
+      else if (content === "update"){
+        content = content + " " + updatespot.val();
+      }
+
       emit("command", {
         content: content,
         mal: malspot.val()
       });
     }
   }
+
   function init(spec){
     malspot = $("#malspot");
+    updatespot = $("#updatespot");
     emit = spec.emit;
-    validBtns = ["play", "pause", "next", "answer"];
+    validBtns = ["play", "pause", "next", "answer", "join", "leave", "update"];
 
     $(".kevBtn").click(function(){
       handleMessage(this.attributes["emitMsg"].value);
+    });
+
+    updatespot.keypress(function(event){
+      if (event.which === 13){
+        event.preventDefault();
+        handleMessage("update");
+      }
     });
   }
 
@@ -259,7 +276,7 @@ var Game = function(){
       emit:emitMessage,
       on:onMessage
     });
-    MusicControls.init({
+    Buttons.init({
       emit:emitMessage
     });
     AudioManager.init({
