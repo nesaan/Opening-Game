@@ -13,7 +13,9 @@ var SongPicker = function(){
       return Promise.resolve([]);
     }
     else {
-      return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/' + catagories.pop(), { json: true }).then(response => {
+      var link = 'https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/' + catagories.pop();
+      console.log(link);
+      return got(link, { json: true }).then(response => {
         return getListRec(catagories).then(animeslist => {
           return animeslist.concat(response.body.anime);
         });
