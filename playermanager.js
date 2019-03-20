@@ -1,16 +1,17 @@
 var PlayerManager = function (){
   var players;
   function init(){
-    players = [];
+    players = {};
   }
 
   function join(socket, uuid, name){
 
-    if (getIndex(uuid) !== -1){
+    if (players[uuid]){
       return;
     }
 
-    players.forEach((player) => {
+    for (var playKey in players){
+      var player = players[playKey];
       socket.emit('addscore', {
         uuid:player.uuid,
         score:player.score,
@@ -22,7 +23,7 @@ var PlayerManager = function (){
         username:name,
         score:0
       });
-    });
+    }
 
     socket.emit('addscore', {
       uuid:uuid,
@@ -30,43 +31,35 @@ var PlayerManager = function (){
       username:name
     });
 
-    players.push({
+    players[uuid] = {
       uuid:uuid,
       username:name,
       score:0,
       socket:socket
-    });
-  }
-
-  function getIndex(uuid){
-    for (var i = 0; i < players.length; i++) {
-      if (players[i].uuid === uuid){
-        return i;
-      }
-    }
-    return -1;
+    };
   }
 
   function remove(uuid){
-    var index = getIndex(uuid);
-    if (index !== -1){
-      players.forEach((player) => {player.socket.emit('removescore', {
-        uuid:uuid
-      });});
-
-      players[index].socket.emit('removeallscores');
-      players.splice(index, 1);
+    if (players[uuid]){
+      for (var playKey in players){
+          players[playKey].socket.emit('removescore', {
+            uuid:uuid
+          });
+      }
+      players[uuid].socket.emit('removeallscores');
+      delete players[uuid];
     }
   }
 
   function update(uuid, score){
-    var index = getIndex(uuid);
-    if (index !== -1){
-      players.forEach((player) => {player.socket.emit('updatescore', {
-        uuid:uuid,
-        score:score
-      });});
-      players[getIndex(uuid)].score = score;
+    if (players[uuid]){
+      for (var playKey in players){
+        players[playKey].socket.emit('updatescore', {
+          uuid:uuid,
+          score:score
+        });
+      }
+      players[uuid].score = score;
     }
   }
 

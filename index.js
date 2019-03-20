@@ -59,10 +59,10 @@ var socketHandler = function(){
         OPManager.answer();
       }
       else if (args[0] == "join"){
-        PlayerManager.join(socket, uuid, args[1] ? args[1] : "Unknown");
+        PlayerManager.join(socket, uuid, args[1] || "Unknown");
       }
       else if (args[0] == "update"){
-        PlayerManager.update(uuid, parseInt(args[1]) ? parseInt(args[1]) : 0);
+        PlayerManager.update(uuid, parseInt(args[1]) || 0);
       }
       else if (args[0] == "leave"){
         PlayerManager.remove(uuid);

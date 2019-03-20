@@ -255,7 +255,7 @@ var ScoreManager = function (){
     var scoreBox = scoreT.clone();
     scorecontainer.append(scoreBox);
     scoreBox.find('.playerName').text(data.username);
-    scoreBox.find('.playerScore').text(data.score ? data.score : 0);
+    scoreBox.find('.playerScore').text(data.score ||  0);
     scoreBox.attr('uuid', data.uuid);
   }
 
