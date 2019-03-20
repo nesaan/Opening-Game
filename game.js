@@ -140,7 +140,7 @@ var Chat = function(){
 
 }();
 
-var Buttons = function(){
+var Kevin = function(){
   var emit;
   var malspot;
   var updatespot;
@@ -276,7 +276,7 @@ var Game = function(){
       emit:emitMessage,
       on:onMessage
     });
-    Buttons.init({
+    Kevin.init({
       emit:emitMessage
     });
     AudioManager.init({
