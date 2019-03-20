@@ -10,8 +10,7 @@ var PlayerManager = function (){
       return;
     }
 
-    for (var playKey in players){
-      if (!players.hasOwnProperty(playKey)){continue;}
+    for (var playKey of Object.keys(players)){
       var player = players[playKey];
       socket.emit('addscore', {
         uuid:playKey,
@@ -41,8 +40,7 @@ var PlayerManager = function (){
 
   function remove(uuid){
     if (players[uuid]){
-      for (var playKey in players){
-        if (!players.hasOwnProperty(playKey)){continue;}
+      for (var playKey of Object.keys(players)){
         players[playKey].socket.emit('removescore', {
           uuid:uuid
         });
@@ -54,8 +52,7 @@ var PlayerManager = function (){
 
   function update(uuid, score){
     if (players[uuid]){
-      for (var playKey in players){
-        if (!players.hasOwnProperty(playKey)){continue;}
+      for (var playKey of Object.keys(players)){
         players[playKey].socket.emit('updatescore', {
           uuid:uuid,
           score:score
