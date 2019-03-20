@@ -16,6 +16,9 @@ body {
   margin:10px 10px 10px 0px;
 }
 
+.scorebox span {
+  color: white;
+}
 .infoline {
   color:#50c878
 }
