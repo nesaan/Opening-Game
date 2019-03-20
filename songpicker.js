@@ -22,7 +22,7 @@ var SongPicker = function(){
   }
 
   function getList(){
-    return getListRec(listCatagories).then(animeslist => {
+    return getListRec(listCatagories.slice()).then(animeslist => {
         animes = animeslist;
         animesFull = animes.slice();
     });
