@@ -6,21 +6,18 @@ var SongPicker = function(){
   var animes;
   var animesFull;
   var mal;
-  function getList(cb, errcb){
-    got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
+  function getList(){
+    return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/completed', { json: true }).then(response => {
       animes = response.body.anime;
       return got('https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/watching', { json: true });
     }).then(response => {
       animes = animes.concat(response.body.anime);
     }).then(() => {
       animesFull = animes.slice();
-      cb();
-    }).catch(error => {
-      errcb();
     });
   }
 
-  function randomAnime(cb, errcb){
+  function randomAnime(){
     var index = Math.floor(Math.random()*animes.length);
     var anime = animes[index];
     console.log(anime.title);
@@ -29,44 +26,42 @@ var SongPicker = function(){
       animes = animesFull ? animesFull.slice() : null;
       console.log("finished all the anime");
     }
-    getLink(anime, cb,errcb);
+    return getLink(anime);
   }
 
-  function randomOP(openings, cb, errcb, title){
+  function randomOP(openings, title){
     var opening = openings[Math.floor(Math.random()*openings.length)];
     console.log(opening.links[0]);
     if (!opening || !opening.links || opening.links[0] == "https:\/\/youtube.com\/?op"){
-      errcb();
+      return Promise.reject("Bad Link");
     }
     else{
-      cb({
+      return {
         url:opening.links[0],
         op: opening.title,
         anime: title
-      });
+      };
     }
   }
 
-  function getLink(anime, cb, errcb){
+  function getLink(anime){
     var link = "https://openings.ninja/api/anime/" + anime.title.replace("/", "");
     console.log(link);
-    got(link, { json: true }).then(response => {
+    return got(link, { json: true }).then(response => {
       openings = response.body.openings;
-      randomOP(openings, cb, errcb, response.body.title);
-    }).catch(error => {
-      errcb();
+      return randomOP(openings, response.body.title);
     });
   }
 
-  function getNextUrl(cb, malU, errcb){
+  function getNextUrl(malU){
     if (!animes || (mal !== malU)){
       mal = malU;
-      getList(function(){
-        randomAnime(cb, errcb);
-      }, errcb);
+      return getList().then(() => {
+        return randomAnime();
+      });
     }
     else{
-      randomAnime(cb, errcb);
+      return randomAnime();
     }
   }
 

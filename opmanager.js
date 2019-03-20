@@ -33,10 +33,10 @@ var OPManager = function(){
     opInfo = null;
     count = 0;
     io.sockets.emit("pause");
-    SongPicker.getNextUrl(function(data){
+    SongPicker.getNextUrl(mal).then(function(data) {
       opInfo = data;
       io.sockets.emit("newsong", {url:data.url});
-    }, mal, function(errorMsg){
+    }).catch(function(errorMsg){
       io.sockets.emit("new message", {
         content: errorMsg || "This link was a baddy.",
         name: "Miku",
