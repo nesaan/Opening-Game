@@ -10,7 +10,10 @@ var AudioHandler = function(){
     vol = volume;
   }
   function errorDeal(e, url, cb, attempt){
-    //console.log(e);
+    console.log(e.target.error.code);
+    if (e.target.error.code == 4){
+      return;
+    }
     console.log('found error, retrying');
     if (attempt > 5){
       return;
