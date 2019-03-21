@@ -9,11 +9,25 @@ var AudioHandler = function(){
     }
     vol = volume;
   }
-  function newAudio(url, cb){
+  function errorDeal(e, url, cb, attempt){
+    //console.log(e);
+    console.log('found error, retrying');
+    if (attempt > 5){
+      return;
+    }
+    newAudio(url, cb, attempt);
+  }
+
+
+
+  function newAudio(url, cb, attempt){
     audio = new Audio(url);
     audio.load();
     audio.volume = vol || 0.5;
     audio.oncanplaythrough = cb;
+    audio.onerror = function(e){
+      errorDeal(e,url,cb, attempt + 1);
+    }
   }
 
   function play(){
@@ -54,7 +68,7 @@ var AudioManager = function(){
     loading.text("loading").show();
     AudioHandler.newAudio(data.url, function(){
       emit("songReady");
-    });
+    }, 0);
   }
 
   function countdown(count){
