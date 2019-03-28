@@ -10,15 +10,14 @@ var AudioHandler = function(){
     vol = volume;
   }
   function errorDeal(e, url, cb, attempt){
-    console.log(e.target.error.code);
-    if (e.target.error.code == 4){
+    console.log('Error: ' + e.target.error.code);
+
+    if (attempt > 3){
       return;
     }
-    console.log('found error, retrying');
-    if (attempt > 5){
-      return;
-    }
-    newAudio(url, cb, attempt);
+    setTimeout(function(){
+      newAudio(url, cb, attempt);
+    }, 1000);
   }
 
 
