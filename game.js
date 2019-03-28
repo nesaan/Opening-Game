@@ -23,7 +23,8 @@ var AudioHandler = function(){
 
 
   function newAudio(url, cb, attempt){
-    audio = new Audio(url);
+    audio = document.createElement('audio');
+    audio.src = url;
     audio.load();
     audio.volume = vol || 0.5;
     audio.oncanplaythrough = cb;
