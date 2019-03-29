@@ -17,7 +17,7 @@ var SongPicker = function(){
   function randomAnime(){
     var index = Math.floor(Math.random()*animes.length);
     var anime = animes[index];
-    animes.splice(anime, 0);
+    animes.splice(index, 0);
     if (animes.length == 0){
       animes = fullAnimes.slice();
     }
