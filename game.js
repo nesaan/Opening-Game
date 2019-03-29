@@ -11,7 +11,9 @@ var AudioHandler = function(){
   }
 
   function newAudio(url, cb, errcb){
-    audio = $('#520')[0];
+    var temp = $('#520');
+    audio = temp[0];
+    temp.find('source')[0].src = url;
     audio.src = url;
     audio.load();
     audio.volume = vol || 0.5;
