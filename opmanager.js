@@ -27,6 +27,13 @@ var OPManager = function(){
         }, 1000);
       }
     });
+    socket.on("songfail", function(){
+      io.sockets.emit("new message", {
+        content: "Failure to find song, probably 520 || 429",
+        name: "Miku",
+        isMiku: true
+      });
+    });
   }
 
   function nextSong(mal){
