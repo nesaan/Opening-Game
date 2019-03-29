@@ -1,70 +1,39 @@
 
 const got = require('got');
 
-
 var SongPicker = function(){
-  var animes;
-  var animesFull;
   var mal;
-  var listCatagories = ["watching", "completed"];
-
-  function getListRec(catagories){
-    if (!catagories || !catagories.length){
-      return Promise.resolve([]);
-    }
-    else {
-      var link = 'https://api.jikan.moe/v3/user/'+ (mal || 'nesaan') +'/animelist/' + catagories.pop();
-      console.log(link);
-      return got(link, { json: true }).then(response => {
-        return getListRec(catagories).then(animeslist => {
-          return animeslist.concat(response.body.anime);
-        });
-      });
-    }
-  }
+  var animes;
+  var fullAnimes;
 
   function getList(){
-    return getListRec(listCatagories.slice()).then(animeslist => {
-        animes = animeslist;
-        animesFull = animes.slice();
+    return got('https://themes.moe/api/mal/' + (mal || 'nesaan'), {json:true}).then(response => {
+      animes = response.body;
+      animes = animes.filter(x => x.watchStatus == 1 || x.watchStatus == 2);
+      fullAnimes = animes.slice();
     });
   }
 
   function randomAnime(){
     var index = Math.floor(Math.random()*animes.length);
     var anime = animes[index];
-    console.log(anime.title);
-    animes.splice(index, 1);
+    animes.splice(anime, 0);
     if (animes.length == 0){
-      animes = animesFull ? animesFull.slice() : null;
-      console.log("finished all the anime");
+      animes = fullAnimes.slice();
     }
-    return getLink(anime);
-  }
+    var themes = anime.themes;
+    if (!themes) {Promise.reject("no themes");}
 
-  function randomOP(openings, title){
-    var opening = openings[Math.floor(Math.random()*openings.length)];
-    console.log(opening.links[0]);
-    if (!opening || !opening.links || opening.links[0] == "https:\/\/youtube.com\/?op"){
-      return Promise.reject("Bad Link");
-    }
-    else{
-      return {
-        url:opening.links[0],
-        op: opening.title,
-        anime: title
-      };
-    }
-  }
-
-  function getLink(anime){
-    var link = "https://openings.ninja/api/anime/" + anime.title.replace("/", "");
-    console.log(link);
-    return got(link, { json: true }).then(response => {
-      openings = response.body.openings;
-      return randomOP(openings, response.body.title);
+    themes = themes.filter(x => x.themeType.startsWith("OP"));
+    var themeIndex = Math.floor(Math.random()*themes.length);
+    console.log(themes[themeIndex].mirror.mirrorURL);
+    return Promise.resolve({
+      url: themes[themeIndex].mirror.mirrorURL,
+      anime: anime.name,
+      op: themes[themeIndex].themeName
     });
   }
+
 
   function getNextUrl(malU){
     if (!animes || (mal !== malU)){
@@ -74,7 +43,7 @@ var SongPicker = function(){
       });
     }
     else{
-      return randomAnime();
+      return Promise.resolve().then(() => randomAnime());
     }
   }
 
