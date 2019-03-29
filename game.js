@@ -13,8 +13,8 @@ var AudioHandler = function(){
   function newAudio(url, cb, errcb){
     var temp = $('#520');
     audio = temp[0];
-    temp.find('source')[0].src = url;
-    audio.src = url;
+    temp.find('source')[0].src = './song?ye=' + url;
+    audio.src = './song?ye=' + url;
     audio.load();
     audio.volume = vol || 0.5;
     audio.oncanplaythrough = cb;

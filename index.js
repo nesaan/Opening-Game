@@ -7,6 +7,14 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + "/game.html");
   });
 
+
+app.get('/song', function(req, res){
+  var file = req.query.ye;
+  console.log(file);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.redirect(file);
+});
+
 var io = require('socket.io').listen(server);
 
 var OPManager = require('./opmanager.js');
