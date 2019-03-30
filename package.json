@@ -9,9 +9,10 @@
   "author": "Nesaan",
   "license": "ISC",
   "dependencies": {
-    "socket.io": "*",
     "express": "*",
     "got": "*",
-    "uuid": "*"
+    "socket.io": "*",
+    "uuid": "*",
+    "request": "*"
   }
 }

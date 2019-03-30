@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-
+var getter = require('request');
 server.listen(process.env.PORT || 3000);
 app.get('/', function(req, res){
     res.sendFile(__dirname + "/game.html");
@@ -10,8 +10,8 @@ app.get('/', function(req, res){
 
 app.get('/song', function(req, res){
   var file = req.query.ye;
-  res.header('Access-Control-Allow-Origin', '*');
-  res.redirect(file);
+  var url = file
+  getter.get(url).pipe(res);  // res being Express response
 });
 
 var io = require('socket.io').listen(server);
