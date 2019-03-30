@@ -11,10 +11,12 @@ var AudioHandler = function(){
   }
 
   function newAudio(url, cb, errcb){
-    var temp = $('#520');
-    audio = temp[0];
-    temp.find('source')[0].src = './song?ye=' + url;
-    audio.src = './song?ye=' + url;
+    if (!audio){
+      audio = new Audio('./song?ye=' + url);
+    }
+    else{
+      audio.src = './song?ye=' + url;
+    }
     audio.load();
     audio.volume = vol || 0.5;
     audio.oncanplaythrough = cb;
@@ -67,8 +69,6 @@ var AudioManager = function(){
   function countdown(count){
     loading.text(count);
   }
-
-
 
   function init(spec){
     loading = $('#loading');

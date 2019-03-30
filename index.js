@@ -11,7 +11,18 @@ app.get('/', function(req, res){
 app.get('/song', function(req, res){
   var file = req.query.ye;
   var url = file
-  getter.get(url).pipe(res);  // res being Express response
+  getter.get(url)
+  .on('response', function(response){
+    console.log(response.statusCode);
+    if (response.statusCode === 429){
+      io.emit('new message', {
+        content:"Call Nesaan please!",
+        name:"Miku",
+        isMiku:true
+      });
+    }
+  })
+  .pipe(res);  // res being Express response
 });
 
 var io = require('socket.io').listen(server);
