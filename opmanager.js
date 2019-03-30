@@ -47,7 +47,7 @@ var OPManager = function(){
         setTimeout(function(){
           console.log(a);
           sockets()[a].emit("newsong", {url:data.url});
-        }, a*400);
+        }, a*1000);
       }
 //      io.sockets.emit("newsong", {url:data.url});
     }).catch(function(errorMsg){
