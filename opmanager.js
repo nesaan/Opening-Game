@@ -45,7 +45,7 @@ var OPManager = function(){
       io.sockets.emit("newsong", {url:data.url});
     }).catch(function(errorMsg){
       io.sockets.emit("new message", {
-        content: errorMsg || "This link was a baddy.",
+        content: "Even themes thinks this link was a baddy.",
         name: "Miku",
         isMiku: true
       })
