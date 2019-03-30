@@ -10,7 +10,6 @@ app.get('/', function(req, res){
 
 app.get('/song', function(req, res){
   var file = req.query.ye;
-  console.log(file);
   res.header('Access-Control-Allow-Origin', '*');
   res.redirect(file);
 });
