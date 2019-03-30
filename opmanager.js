@@ -42,14 +42,7 @@ var OPManager = function(){
     io.sockets.emit("pause");
     SongPicker.getNextUrl(mal).then(function(data) {
       opInfo = data;
-      for (var i = 0; i < sockets().length; i++){
-        const a = i;
-        setTimeout(function(){
-          console.log(a);
-          sockets()[a].emit("newsong", {url:data.url});
-        }, a*1000);
-      }
-//      io.sockets.emit("newsong", {url:data.url});
+      io.sockets.emit("newsong", {url:data.url});
     }).catch(function(errorMsg){
       io.sockets.emit("new message", {
         content: errorMsg || "This link was a baddy.",
