@@ -13,7 +13,6 @@ var SongPicker = function(){
     for (var i = 0; i < list.length; i ++){
       const j = i;
       curse = curse.then(() => {
-        console.log(j);
         return got('https://themes.moe/api/mal/' + list[j], {json:true}).then(response => {
           var temp = response.body;
           temp = temp.filter(x => x.watchStatus == 1 || x.watchStatus == 2);
@@ -22,7 +21,7 @@ var SongPicker = function(){
       });
     }
     return curse.then(() =>{
-      animes.reduce(elegant);
+      animes = animes.reduce(elegant);
       fullAnimes = animes.slice();
     });
   }
