@@ -17,10 +17,10 @@ var AudioHandler = function(){
     else{
       audio.src = './song?ye=' + url;
     }
+    audio.currentTime = startTime || 0;
     audio.volume = vol || 0.5;
     audio.oncanplay = cb;
     audio.onerror = errcb;
-    audio.currentTime = startTime || 0;
   }
 
   function play(){
