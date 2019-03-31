@@ -10,17 +10,17 @@ var AudioHandler = function(){
     vol = volume;
   }
 
-  function newAudio(url, cb, errcb){
+  function newAudio(url, cb, errcb, startTime){
     if (!audio){
       audio = new Audio('./song?ye=' + url);
     }
     else{
       audio.src = './song?ye=' + url;
     }
-    audio.load();
     audio.volume = vol || 0.5;
     audio.oncanplaythrough = cb;
     audio.onerror = errcb;
+    audio.currentTime = startTime || 0;
   }
 
   function play(){
@@ -63,7 +63,7 @@ var AudioManager = function(){
       emit("songReady");
     }, function(){
       emit("songfail");
-    });
+    }, data.startTime);
   }
 
   function countdown(count){
@@ -98,6 +98,7 @@ var Chat = function(){
   var msgBoxT;
   var uuid;
   var endingC;
+  var middleC;
 
   function addmessage(data){
     var msgbox = msgBoxT.clone().appendTo(messages);
@@ -116,7 +117,8 @@ var Chat = function(){
       emit("command", {
         content : content.substring(1),
         mal : malspot.val(),
-        endings : endingC.prop('checked')
+        endings : endingC.prop('checked'),
+        middle: middleC.prop('checked')
       });
     }
     else{
@@ -132,6 +134,7 @@ var Chat = function(){
     malspot = $("#malspot");
     msgBoxT = $(".template").find(".msgbox");
     endingC = $("#endingC");
+    middleC = $("#middleC");
     emit = spec.emit;
     on  = spec.on;
     on("uuid", function(data){uuid = data });
@@ -156,6 +159,7 @@ var Kevin = function(){
   var updatespot;
   var validBtns;
   var endingC;
+  var middleC;
 
   function handleMessage(content){
     if (content && validBtns.includes(content)) {
@@ -169,7 +173,8 @@ var Kevin = function(){
       emit("command", {
         content: content,
         mal: malspot.val(),
-        endings: endingC.prop('checked')
+        endings: endingC.prop('checked'),
+        middle: middleC.prop('checked')
       });
     }
   }
@@ -177,6 +182,7 @@ var Kevin = function(){
   function init(spec){
     malspot = $("#malspot");
     endingC = $('#endingC');
+    middleC = $("#middleC");
     updatespot = $("#updatespot");
     emit = spec.emit;
     validBtns = ["play", "pause", "next", "answer", "join", "leave", "update"];

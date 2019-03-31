@@ -36,7 +36,7 @@ var OPManager = function(){
     });
   }
 
-  function nextSong(mal, endings){
+  function nextSong(mal, endings, startTime){
     opInfo = null;
     count = 0;
     io.sockets.emit("pause");
@@ -45,7 +45,10 @@ var OPManager = function(){
       endings: endings
     }).then(function(data) {
       opInfo = data;
-      io.sockets.emit("newsong", {url:data.url});
+      io.sockets.emit("newsong", {
+        url:data.url,
+        startTime:startTime
+      });
     }).catch(function(errorMsg){
       console.log(errorMsg);
       io.sockets.emit("new message", {
