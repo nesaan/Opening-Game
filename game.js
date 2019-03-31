@@ -18,7 +18,7 @@ var AudioHandler = function(){
       audio.src = './song?ye=' + url;
     }
     audio.volume = vol || 0.5;
-    audio.oncanplaythrough = cb;
+    audio.oncanplay = cb;
     audio.onerror = errcb;
     audio.currentTime = startTime || 0;
   }
