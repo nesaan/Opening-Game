@@ -7,11 +7,37 @@ var SongPicker = function(){
   var fullAnimes;
 
   function getList(){
-    return got('https://themes.moe/api/mal/' + (mal || 'nesaan'), {json:true}).then(response => {
-      animes = response.body;
-      animes = animes.filter(x => x.watchStatus == 1 || x.watchStatus == 2);
+    var list = mal ? mal.split(',') : ['nesaan'];
+    var curse = Promise.resolve();
+    animes = [];
+    for (var i = 0; i < list.length; i ++){
+      const j = i;
+      curse = curse.then(() => {
+        console.log(j);
+        return got('https://themes.moe/api/mal/' + list[j], {json:true}).then(response => {
+          var temp = response.body;
+          temp = temp.filter(x => x.watchStatus == 1 || x.watchStatus == 2);
+          animes = animes.concat(temp);
+        });
+      });
+    }
+    return curse.then(() =>{
+      animes.reduce(elegant);
       fullAnimes = animes.slice();
     });
+  }
+
+  function elegant(acc, val){
+    if (!Array.isArray(acc)){
+      acc = [acc];
+    }
+    for (var i = 0; i < acc.length; i ++){
+      if (acc[i].name === val.name){
+        return acc;
+      }
+    }
+    acc.push(val);
+    return acc;
   }
 
   function randomAnime(){
