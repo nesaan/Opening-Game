@@ -97,6 +97,7 @@ var Chat = function(){
   var malspot;
   var msgBoxT;
   var uuid;
+  var endingC;
 
   function addmessage(data){
     var msgbox = msgBoxT.clone().appendTo(messages);
@@ -114,7 +115,8 @@ var Chat = function(){
     if (content[0] === '/'){
       emit("command", {
         content : content.substring(1),
-        mal : malspot.val()
+        mal : malspot.val(),
+        endings : endingC.prop('checked')
       });
     }
     else{
@@ -129,6 +131,7 @@ var Chat = function(){
     messages = $("#messages");
     malspot = $("#malspot");
     msgBoxT = $(".template").find(".msgbox");
+    endingC = $("#endingC");
     emit = spec.emit;
     on  = spec.on;
     on("uuid", function(data){uuid = data });
@@ -152,6 +155,7 @@ var Kevin = function(){
   var malspot;
   var updatespot;
   var validBtns;
+  var endingC;
 
   function handleMessage(content){
     if (content && validBtns.includes(content)) {
@@ -164,13 +168,15 @@ var Kevin = function(){
 
       emit("command", {
         content: content,
-        mal: malspot.val()
+        mal: malspot.val(),
+        endings: endingC.prop('checked')
       });
     }
   }
 
   function init(spec){
     malspot = $("#malspot");
+    endingC = $('#endingC');
     updatespot = $("#updatespot");
     emit = spec.emit;
     validBtns = ["play", "pause", "next", "answer", "join", "leave", "update"];

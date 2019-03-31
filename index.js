@@ -61,7 +61,7 @@ var socketHandler = function(){
     socket.on("command", function(data){
       var args = data.content.split(' ');
       if (args[0] == "next"){
-        OPManager.nextSong(data.mal);
+        OPManager.nextSong(data.mal, data.endings);
       }
       else if (args[0] == "pause"){
         io.sockets.emit("pause");

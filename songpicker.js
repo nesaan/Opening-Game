@@ -5,6 +5,7 @@ var SongPicker = function(){
   var mal;
   var animes;
   var fullAnimes;
+  var endings = false;
 
   function getList(){
     var list = mal ? mal.split(',') : ['nesaan'];
@@ -47,10 +48,17 @@ var SongPicker = function(){
       animes = fullAnimes.slice();
     }
     var themes = anime.themes;
-    if (!themes) {Promise.reject("no themes");}
+    if (!themes) {return Promise.reject("no themes");}
+    if (!endings){
+      themes = themes.filter(x => x.themeType.startsWith("OP"));
+    }
 
-    themes = themes.filter(x => x.themeType.startsWith("OP"));
+    if (themes.length == 0){
+      return Promise.reject("no valid themes for " + anime.name);
+    }
+
     var themeIndex = Math.floor(Math.random()*themes.length);
+    console.log(anime.name + " " + themes[themeIndex].themeType);
     console.log(themes[themeIndex].mirror.mirrorURL);
     return Promise.resolve({
       url: themes[themeIndex].mirror.mirrorURL,
@@ -60,9 +68,10 @@ var SongPicker = function(){
   }
 
 
-  function getNextUrl(malU){
-    if (!animes || (mal !== malU)){
-      mal = malU;
+  function getNextUrl(spec){
+    endings = spec.endings;
+    if (!animes || (mal !== spec.mal)){
+      mal = spec.mal;
       return getList().then(() => {
         return randomAnime();
       });

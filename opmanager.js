@@ -36,11 +36,14 @@ var OPManager = function(){
     });
   }
 
-  function nextSong(mal){
+  function nextSong(mal, endings){
     opInfo = null;
     count = 0;
     io.sockets.emit("pause");
-    SongPicker.getNextUrl(mal).then(function(data) {
+    SongPicker.getNextUrl({
+      mal: mal,
+      endings: endings
+    }).then(function(data) {
       opInfo = data;
       io.sockets.emit("newsong", {url:data.url});
     }).catch(function(errorMsg){
