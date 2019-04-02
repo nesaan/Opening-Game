@@ -10,12 +10,22 @@ var AudioHandler = function(){
     vol = volume;
   }
 
+  function makeid(length) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < length; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
+
   function newAudio(url, cb, errcb, startTime){
     if (!audio){
-      audio = new Audio('./song?ye=' + url);
+      audio = new Audio('./song'  + '?ye=' + makeid(38));
     }
     else{
-      audio.src = './song?ye=' + url;
+      audio.src = './song' + '?ye=' + makeid(38);
     }
     audio.load();
     audio.volume = vol || 0.5;

@@ -69,11 +69,18 @@ var OPManager = function(){
     }
   }
 
+  function url(){
+    if (opInfo){
+      return opInfo.url;
+    }
+  }
+
   return {
     init:init,
     answer:answer,
     nextSong:nextSong,
-    add:add
+    add:add,
+    url:url
   }
 
 }();

@@ -9,9 +9,7 @@ app.get('/', function(req, res){
 
 
 app.get('/song', function(req, res){
-  var file = req.query.ye;
-  var url = file
-  getter.get(url)
+  getter.get(OPManager.url())
   .on('response', function(response){
     console.log(response.statusCode);
     if (response.statusCode === 429){
