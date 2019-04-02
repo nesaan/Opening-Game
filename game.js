@@ -22,14 +22,12 @@ var AudioHandler = function(){
 
   function newAudio(url, cb, errcb, startTime){
     if (!audio){
-      audio = new Audio('./song'  + '?ye=' + makeid(38));
+      audio = document.createElement('audio');
+      audio.oncanplay = cb;
     }
-    else{
-      audio.src = './song' + '?ye=' + makeid(38);
-    }
-    audio.load();
+    audio.src = './song' + '?ye=' + makeid(38);
+    audio.currentTime = startTime;
     audio.volume = vol || 0.5;
-    audio.oncanplay = cb;
     audio.onerror = errcb;
   }
 

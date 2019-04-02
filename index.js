@@ -59,7 +59,7 @@ var socketHandler = function(){
     socket.on("command", function(data){
       var args = data.content.split(' ');
       if (args[0] == "next"){
-        var startTime = data.middle ?  Math.floor(Math.random() * 30) : 0;
+        var startTime = data.middle ?  Math.floor(Math.random() * 40) : 0;
         OPManager.nextSong(data.mal, data.endings, startTime);
       }
       else if (args[0] == "pause"){
