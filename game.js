@@ -22,7 +22,7 @@ var AudioHandler = function(){
 
   function newAudio(url, cb, errcb, startTime){
     if (!audio){
-      audio = document.createElement('audio');
+      audio = $('audio')[0];
       audio.oncanplay = cb;
     }
     audio.src = './song' + '?ye=' + makeid(38);
