@@ -25,7 +25,8 @@ var AudioHandler = function(){
       audio = $('audio')[0];
       audio.oncanplay = cb;
     }
-    audio.src = './song' + '?ye=' + makeid(38);
+    //audio.src = './song' + '?ye=' + makeid(38);
+    audio.src = startTime  == 0 ? ('./song' + '?ye=' + makeid(38)) : url;
     audio.currentTime = startTime;
     audio.volume = vol || 0.5;
     audio.onerror = errcb;
