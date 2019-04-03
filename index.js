@@ -7,6 +7,9 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + "/game.html");
   });
 
+app.get('/redirect', function(req, res){
+  res.redirect(OPManager.url());
+});
 
 app.get('/song', function(req, res){
   getter.get(OPManager.url())
