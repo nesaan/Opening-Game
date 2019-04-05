@@ -26,7 +26,7 @@ var AudioHandler = function(){
       audio.oncanplay = cb;
     }
     //audio.src = './song' + '?ye=' + makeid(38);
-    audio.src = './' + (startTime == 0 ? 'song' : 'redirect')  + '?ye=' + makeid(38);
+    audio.src = './song?ye=' + makeid(38);
     audio.currentTime = startTime;
     audio.volume = vol || 0.5;
     audio.onerror = errcb;

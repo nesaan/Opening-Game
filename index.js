@@ -12,18 +12,15 @@ app.get('/redirect', function(req, res){
 });
 
 app.get('/song', function(req, res){
-  getter.get(OPManager.url())
-  .on('response', function(response){
-    console.log(response.statusCode);
-    if (response.statusCode === 429){
-      io.emit('new message', {
-        content:"Call Nesaan please!",
-        name:"Miku",
-        isMiku:true
-      });
-    }
-  })
-  .pipe(res);  // res being Express response
+  getter({
+    method: 'GET',
+    uri: OPManager.url(),
+    headers: {
+        range: req.headers.range || null
+      }
+    }, function (error, response, body) {}
+  )
+  .pipe(res);
 });
 
 var io = require('socket.io').listen(server);
