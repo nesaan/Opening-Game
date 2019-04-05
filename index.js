@@ -15,9 +15,9 @@ app.get('/song', function(req, res){
   getter({
     method: 'GET',
     uri: OPManager.url(),
-    headers: {
-        range: req.headers.range || null
-      }
+    headers: req.headers.range ? {
+        range : req.headers.range
+      } : {}
     }, function (error, response, body) {}
   )
   .pipe(res);
