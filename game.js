@@ -32,6 +32,13 @@ var AudioHandler = function(){
     audio.onerror = errcb;
   }
 
+  function replay(){
+    if (audio){
+      audio.currentTime = 0;
+      audio.play();
+    }
+  }
+
   function play(){
     if(audio){
       audio.play();
@@ -46,7 +53,8 @@ var AudioHandler = function(){
     play:play,
     pause:pause,
     newAudio:newAudio,
-    setVolume:setVolume
+    setVolume:setVolume,
+    replay: replay
   }
 
 }();
@@ -75,6 +83,10 @@ var AudioManager = function(){
     }, data.startTime);
   }
 
+  function replay(){
+    AudioHandler.replay();
+  }
+
   function countdown(count){
     loading.text(count);
   }
@@ -87,6 +99,7 @@ var AudioManager = function(){
     on("pause", pause);
     on("newsong", newAudio);
     on("countdown", countdown);
+    on('replay', replay);
     $("#volumeControl")[0].oninput = function(){
       AudioHandler.setVolume(this.value);
     };

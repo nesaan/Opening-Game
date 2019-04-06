@@ -87,6 +87,9 @@ var socketHandler = function(){
       else if (args[0] == "leave"){
         PlayerManager.remove(uuid);
       }
+      else if (args[0] == "replay"){
+        io.emit("replay");
+      }
     });
   }
 
