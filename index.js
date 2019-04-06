@@ -13,15 +13,17 @@ app.get('/redirect', function(req, res){
   res.redirect(OPManager.url());
 });
 
+function options(req){
+  headers = req.headers.range ? {range : req.headers.range} : {};
+  return {
+    url: OPManager.url(),
+    headers: headers
+  }
+}
+
+
 app.get('/song', function(req, res){
-  getter({
-    method: 'GET',
-    uri: OPManager.url(),
-    headers: req.headers.range ? {
-        range : req.headers.range
-      } : {}
-    }, function (error, response, body) {}
-  )
+  getter(options(req))
   .pipe(res);
 });
 
