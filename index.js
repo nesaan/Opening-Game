@@ -3,6 +3,8 @@ var app = express();
 var server = require('http').createServer(app);
 var getter = require('request');
 server.listen(process.env.PORT || 3000);
+var io = require('socket.io').listen(server);
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + "/game.html");
   });
@@ -23,7 +25,6 @@ app.get('/song', function(req, res){
   .pipe(res);
 });
 
-var io = require('socket.io').listen(server);
 
 var OPManager = require('./opmanager.js');
 var uuid1 = require('uuid/v1');
